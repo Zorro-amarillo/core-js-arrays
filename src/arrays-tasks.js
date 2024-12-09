@@ -361,8 +361,10 @@ function createChunks(/* arr, chunkSize */) {
  *    generateOdds(2) => [ 1, 3 ]
  *    generateOdds(5) => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len) {
+  return Array.from({ length: len * 2 }, (value, index) => index).filter(
+    (item, index) => index % 2 !== 0
+  );
 }
 
 /**
@@ -417,8 +419,26 @@ function getFalsyValuesCount(arr) {
  *                              [0,0,0,1,0],
  *                              [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  const subArr = Array.from({ length: n }, (value) => {
+    return value ?? 0;
+  });
+
+  const matrix = Array.from({ length: n }, (value) => {
+    return value ?? 0;
+  }).fill(subArr);
+
+  const identityMatrix = matrix.map((arr, index) => {
+    return arr.map((num, i) => {
+      if (i === index) {
+        return 1;
+      }
+
+      return num;
+    });
+  });
+
+  return identityMatrix;
 }
 
 /**
@@ -500,8 +520,8 @@ function getMaxItems(arr, n) {
  *    findCommonElements(['a', 'b', 'c'], ['b', 'c', 'd']) => [ 'b', 'c' ]
  *    findCommonElements([1, 2, 3], ['a', 'b', 'c']) => []
  */
-function findCommonElements(/* arr1, arr2 */) {
-  throw new Error('Not implemented');
+function findCommonElements(arr1, arr2) {
+  return arr1.filter((item) => arr2.includes(item));
 }
 
 /**
@@ -515,8 +535,25 @@ function findCommonElements(/* arr1, arr2 */) {
  *    findLongestIncreasingSubsequence([3, 10, 2, 1, 20]) => 2
  *    findLongestIncreasingSubsequence([50, 3, 10, 7, 40, 80]) => 3
  */
-function findLongestIncreasingSubsequence(/* nums */) {
-  throw new Error('Not implemented');
+function findLongestIncreasingSubsequence(nums) {
+  let subsequence = 1;
+  let maxSubsequence = 0;
+
+  function compareNums(a, b) {
+    if (a > b) {
+      subsequence += 1;
+
+      if (subsequence > maxSubsequence) {
+        maxSubsequence = subsequence;
+      }
+    } else {
+      subsequence = 1;
+    }
+  }
+
+  nums.sort(compareNums);
+
+  return maxSubsequence;
 }
 
 /**
